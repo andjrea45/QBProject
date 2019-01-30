@@ -10,6 +10,7 @@ geometry: margin=2.54cm
 rm(list=ls())
 getwd()
 setwd("~/GitHub/QBProject/")
+require("tidyverse")
 require("vegan")
 require("ggplot2")
 require("OTUtable")
@@ -17,6 +18,20 @@ require("OTUtable")
 
 ```{r}
 #Load bog data and print structure
+bog_loc <- read.table("~/Github/QBProject/NTL_MO_bogs_location.txt", sep = "\t", row.names = 1, header = TRUE)
 data(otu_table)
 str(otu_table, max.level=0)
+first <- c("E01JUL07", "E02JUL07", "E03JUL07", "E04JUL07")
+otu_table <- otu_table[,grep(paste(first, collapse = "|"), colnames(otu_table))]
+#otu_table <- otu_table[,grep("JUL07", colnames(otu_table))]
+print(colnames(otu_table))
+otu_table <- as.data.frame(t(otu_table))
+```
+
+```{r}
+min.N <- min(rowSums(otu_table))
+jelly.rarefy <- rarefy(x = otu_table, sample = min.N, se = TRUE)
+rarecurve(x = otu_table, step = 10, col = "blue", cex = 0.6, las = 1, main = "Bog rarefaction curve")
+abline(0,1, col = 'red')
+abline(v = min.N, col = 'green')
 ```
