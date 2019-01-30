@@ -1,0 +1,22 @@
+---
+title: "Bog_Data"
+author: "Andrea Phillips and Emmi Mueller; Z620: Quantitative Biodiversity, Indiana University"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+geometry: margin=2.54cm
+---
+```{r}
+#Clear workspace, set working directory and load packages
+rm(list=ls())
+getwd()
+setwd("~/GitHub/QBProject/")
+require("vegan")
+require("ggplot2")
+require("OTUtable")
+```
+
+```{r}
+#Load bog data and print structure
+data(otu_table)
+str(otu_table, max.level=0)
+```
