@@ -9,7 +9,8 @@ geometry: margin=2.54cm
 #Clear workspace, set working directory and load packages
 rm(list=ls())
 getwd()
-setwd("C:/Users/andjr/Desktop/QBProject-master")
+#setwd("C:/Users/andjr/Desktop/QBProject-master")
+setwd("~/GitHub/QBProject")
 require("tidyverse")
 require("vegan")
 require("ggplot2")
@@ -39,9 +40,9 @@ abline(v = min.N, col = 'green')
 ```{r}
 #install temporal diversity packages
 package.list <- c('vegan', 'tidyr', 'dplyr', 'codyn', 'ggplot2', 'cowplot', 'MullerPlot', 'RColorBrewer', 'reshape2', 'lubridate', 'TTR', 'xtable', 'multcomp', 'pander', 'png', 'grid', 'tseries', 'nlme', 'forecast', 'emmeans')
-for (package in package.lists) {
+for (package in package.list) {
   if (!require(package, character.only = TRUE, quietly = TRUE)) {
-    install.packages(package, repos='http://cran.us.r-project.org)
+    install.packages(package, repos='http://cran.us.r-project.org')
 library(package, character.only = TRUE)
   }
 }
