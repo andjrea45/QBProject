@@ -9,7 +9,7 @@ geometry: margin=2.54cm
 #Clear workspace, set working directory and load packages
 rm(list=ls())
 getwd()
-setwd("~/GitHub/QBProject/")
+setwd("C:/Users/andjr/Desktop/QBProject-master")
 require("tidyverse")
 require("vegan")
 require("ggplot2")
@@ -34,4 +34,24 @@ jelly.rarefy <- rarefy(x = otu_table, sample = min.N, se = TRUE)
 rarecurve(x = otu_table, step = 10, col = "blue", cex = 0.6, las = 1, main = "Bog rarefaction curve")
 abline(0,1, col = 'red')
 abline(v = min.N, col = 'green')
+```
+
+```{r}
+#install temporal diversity packages
+package.list <- c('vegan', 'tidyr', 'dplyr', 'codyn', 'ggplot2', 'cowplot', 'MullerPlot', 'RColorBrewer', 'reshape2', 'lubridate', 'TTR', 'xtable', 'multcomp', 'pander', 'png', 'grid', 'tseries', 'nlme', 'forecast', 'emmeans')
+for (package in package.lists) {
+  if (!require(package, character.only = TRUE, quietly = TRUE)) {
+    install.packages(package, repos='http://cran.us.r-project.org)
+library(package, character.only = TRUE)
+  }
+}
+
+bog_loc <- read.table("~/Github/QBProject/NTL_MO_bogs_location.txt", sep = ",", header = TRUE)
+bog_loc <- unite(bog_loc, col = date, c(year, month, day), sep = "-", remove = FALSE)
+bog_loc <- unite(portal, col = taxon, c(genus, species), sep = "-", remove = FALSE)
+
+time.by.species <- group_by(bog_loc, year, plot_id) %>%
+count(taxon) %>% spread(key = taxon, value = n, fill = 0)
+
+time.by.species <- as.data.frame(time.by.species)
 ```
