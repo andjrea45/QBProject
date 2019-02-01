@@ -23,10 +23,12 @@ bog_loc <- read.table("~/Github/QBProject/NTL_MO_bogs_location.txt", sep = "\t",
 data(otu_table)
 str(otu_table, max.level=0)
 first <- c("E01JUL07", "E02JUL07", "E03JUL07", "E04JUL07")
-otu_table <- otu_table[,grep(paste(first, collapse = "|"), colnames(otu_table))]
-#otu_table <- otu_table[,grep("JUL07", colnames(otu_table))]
-print(colnames(otu_table))
-otu_table <- as.data.frame(t(otu_table))
+otu_JUL07 <- otu_table[,grep(paste(first, collapse = "|"), colnames(otu_table))]
+CB <- c("CB", "JUL")
+otu_CB <- otu_table[,grep(CB, colnames(otu_table))]
+print(colnames(otu_JUL07))
+print(colnames(otu_CB))
+otu_JUL07 <- as.data.frame(t(otu_JUL07))
 ```
 
 ```{r}
