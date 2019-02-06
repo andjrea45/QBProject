@@ -9,8 +9,12 @@ geometry: margin=2.54cm
 #Clear workspace, set working directory and load packages
 rm(list=ls())
 getwd()
-#setwd("C:/Users/andjr/Desktop/QBProject-master")
-setwd("~/GitHub/QBProject")
+
+install.packages("tidyverse")
+install.packages("vegan")
+install.packages("ggplot2")
+install.packages("OTUtable")
+
 require("tidyverse")
 require("vegan")
 require("ggplot2")
@@ -19,7 +23,7 @@ require("OTUtable")
 
 ```{r}
 #Load bog data and print structure
-bog_loc <- read.table("~/Github/QBProject/NTL_MO_bogs_location.txt", sep = "\t", row.names = 1, header = TRUE)
+bog_loc <- read.table("NTL_MO_bogs_location.txt", header = TRUE, sep = "\t", row.names = 1)
 data(otu_table)
 str(otu_table, max.level=0)
 first <- c("E01JUL07", "E02JUL07", "E03JUL07", "E04JUL07")
@@ -40,7 +44,57 @@ abline(v = min.N, col = 'green')
 ```
 
 ```{r}
+#looking at correlations between Crystal Bog and Mary Lake on the same date 
+
+#CBE01OCT07 and CBE27JUN07
+(cor(otu_table[[24]], otu_table[[80]]))^2
+
+#CBE27JUN07 and MAE27JUN07
+(cor(otu_table[[80]], otu_table[[444]]))^2
+
+#CBE01OCT07 and MAE01OCT07
+(cor(otu_table[[24]], otu_table[[372]]))^2
+
+
+
+
+```
+
+```{r}
+#spatial diversity
+require("vegan")
+install.packages("sp")
+require("sp")
+install.packages("gstat")
+require("gstat")
+install.packages("raster")
+require("raster")
+install.packages("RgoogleMaps")
+require("RGoogleMaps")
+install.packages("maptools")
+require("maptools")
+install.packages("rgdal")
+require("rgdal")
+install.packages("simba")
+require("simba")
+install.packages("gplots")
+require("gplots")
+install.packages("rgeos")
+require(rgeos)
+
+boglocate <- read.table("NTL_MO_bogs_location.txt", head = TRUE, sep = ",")
+boglocate <- boglocate[1:9, 3:4]
+bogsbs <- otu_table
+bogsbsnames <- names(bogsbs)
+bogsbs <- as.data.frame(bogsbs[-1])
+
+
+
+```
+
+```{r}
 #install temporal diversity packages
+#We're not sure if we're going to use this yet
 package.list <- c('vegan', 'tidyr', 'dplyr', 'codyn', 'ggplot2', 'cowplot', 'MullerPlot', 'RColorBrewer', 'reshape2', 'lubridate', 'TTR', 'xtable', 'multcomp', 'pander', 'png', 'grid', 'tseries', 'nlme', 'forecast', 'emmeans')
 for (package in package.list) {
   if (!require(package, character.only = TRUE, quietly = TRUE)) {
